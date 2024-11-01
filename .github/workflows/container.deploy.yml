@@ -63,9 +63,6 @@ jobs:
                 --name ${{ env.AZURE_APP_NAME }} \
                 --resource-group ${{ env.RESOURCE_GROUP }} \
                 --image ${{ env.ACR_REGISTRY }}/${{ env.IMAGE_NAME }} \
-                --registry-server ${{ env.ACR_REGISTRY }} \
-                --registry-username ${{ env.ACR_USERNAME }} \
-                --registry-password ${{ env.ACR_PASSWORD }} \
                 --cpu 0.5 --memory 1.0Gi
             else
               # Create the container app if it doesn't exist
@@ -74,9 +71,5 @@ jobs:
                 --resource-group ${{ env.RESOURCE_GROUP }} \
                 --environment ${{ env.CONTAINERAPPS_ENVIRONMENT }} \
                 --image ${{ env.ACR_REGISTRY }}/${{ env.IMAGE_NAME }} \
-                --registry-server ${{ env.ACR_REGISTRY }} \
-                --registry-username ${{ env.ACR_USERNAME }} \
-                --registry-password ${{ env.ACR_PASSWORD }} \
                 --cpu 0.5 --memory 1.0Gi
             fi
-  
