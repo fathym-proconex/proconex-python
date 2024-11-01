@@ -50,8 +50,9 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
-            # Allow dynamic installation of the containerapp extension
+            # Allow dynamic installation of the containerapp extension and update it
             az config set extension.use_dynamic_install=yes_without_prompt
+            az extension update --name containerapp
 
             # Deploy or update the container app
             az containerapp create \
@@ -62,5 +63,5 @@ jobs:
               --registry-server ${{ env.ACR_REGISTRY }} \
               --registry-username ${{ env.ACR_USERNAME }} \
               --registry-password ${{ env.ACR_PASSWORD }} \
-              --cpu 0.5 --memory 1.0Gi \
-              --api-version 2022-11-01-preview
+              --cpu 0.5 --memory 1.0Gi
+  
