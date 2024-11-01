@@ -5,8 +5,8 @@ on:
     branches: main
 
 env:
-  AZURE_APP_NAME: proconex-pyhton
-  IMAGE_NAME: proconex-pyhton:latest
+  AZURE_APP_NAME: proconex-python
+  IMAGE_NAME: proconex-python:latest
   ACR_REGISTRY: ${{ secrets.ACR_REGISTRY }}
   ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
   ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
