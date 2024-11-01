@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "build:docker": "docker build --no-cache -t proconex-python -f DOCKERFILE .",
+    "clean:docker": "docker stop proconex-python || true && docker rm proconex-python || true",
+    "deploy:docker": "docker run --name proconex-python --network proconex-pythons --env-file .env -dp 127.0.0.1:8501:8501 proconex-python",
+    "network:docker": "docker network create proconex-pythons || true",
+    "docker": "deno task build:docker && deno task network:docker && deno task clean:docker && deno task deploy:docker"
+  }
+}

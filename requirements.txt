@@ -1,0 +1,10 @@
+streamlit
+pandas
+matplotlib
+seaborn
+scipy
+python-dotenv
+openai  # if using OpenAI APIs
+langchain  # assuming you use langchain libraries
+langchain_openai 
+langchain_experimental
