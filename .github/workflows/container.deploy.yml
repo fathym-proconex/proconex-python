@@ -50,18 +50,33 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
-            # Allow dynamic installation of the containerapp extension and update it
+            # Allow dynamic installation of the containerapp extension
             az config set extension.use_dynamic_install=yes_without_prompt
+            
+            # Install the containerapp extension
             az extension add --name containerapp
 
-            # Deploy or update the container app
-            az containerapp create \
-              --name ${{ env.AZURE_APP_NAME }} \
-              --resource-group ${{ env.RESOURCE_GROUP }} \
-              --environment ${{ env.CONTAINERAPPS_ENVIRONMENT }} \
-              --image ${{ env.ACR_REGISTRY }}/${{ env.IMAGE_NAME }} \
-              --registry-server ${{ env.ACR_REGISTRY }} \
-              --registry-username ${{ env.ACR_USERNAME }} \
-              --registry-password ${{ env.ACR_PASSWORD }} \
-              --cpu 0.5 --memory 1.0Gi
+            # Check if the container app exists
+            if az containerapp show --name ${{ env.AZURE_APP_NAME }} --resource-group ${{ env.RESOURCE_GROUP }} --only-show-errors; then
+              # Update the container app if it exists
+              az containerapp update \
+                --name ${{ env.AZURE_APP_NAME }} \
+                --resource-group ${{ env.RESOURCE_GROUP }} \
+                --image ${{ env.ACR_REGISTRY }}/${{ env.IMAGE_NAME }} \
+                --registry-server ${{ env.ACR_REGISTRY }} \
+                --registry-username ${{ env.ACR_USERNAME }} \
+                --registry-password ${{ env.ACR_PASSWORD }} \
+                --cpu 0.5 --memory 1.0Gi
+            else
+              # Create the container app if it doesn't exist
+              az containerapp create \
+                --name ${{ env.AZURE_APP_NAME }} \
+                --resource-group ${{ env.RESOURCE_GROUP }} \
+                --environment ${{ env.CONTAINERAPPS_ENVIRONMENT }} \
+                --image ${{ env.ACR_REGISTRY }}/${{ env.IMAGE_NAME }} \
+                --registry-server ${{ env.ACR_REGISTRY }} \
+                --registry-username ${{ env.ACR_USERNAME }} \
+                --registry-password ${{ env.ACR_PASSWORD }} \
+                --cpu 0.5 --memory 1.0Gi
+            fi
   
