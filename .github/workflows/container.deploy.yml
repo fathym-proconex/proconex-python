@@ -48,9 +48,8 @@ jobs:
       - name: Deploy to Azure Container App
         uses: azure/CLI@v1
         with:
-          azcliversion: 2.30.0  # Specify a recent version of the Azure CLI
-          scriptType: bash
-          script: |
+          azcliversion: 2.30.0
+          inlineScript: |
             # Deploy or update the container app
             az containerapp create \
               --name ${{ env.AZURE_APP_NAME }} \
