@@ -62,4 +62,5 @@ jobs:
               --registry-server ${{ env.ACR_REGISTRY }} \
               --registry-username ${{ env.ACR_USERNAME }} \
               --registry-password ${{ env.ACR_PASSWORD }} \
-              --cpu 0.5 --memory 1.0Gi
+              --cpu 0.5 --memory 1.0Gi \
+              --api-version 2022-11-01-preview
