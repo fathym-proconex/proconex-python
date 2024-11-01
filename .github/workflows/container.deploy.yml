@@ -50,6 +50,9 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
+            # Allow dynamic installation of the containerapp extension
+            az config set extension.use_dynamic_install=yes_without_prompt
+
             # Deploy or update the container app
             az containerapp create \
               --name ${{ env.AZURE_APP_NAME }} \
