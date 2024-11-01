@@ -52,7 +52,7 @@ jobs:
           inlineScript: |
             # Allow dynamic installation of the containerapp extension and update it
             az config set extension.use_dynamic_install=yes_without_prompt
-            az extension update --name containerapp
+            az extension add --name containerapp
 
             # Deploy or update the container app
             az containerapp create \
