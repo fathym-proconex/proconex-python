@@ -9,7 +9,7 @@ from scipy import stats
 
 from pathlib import Path
 from collections import defaultdict
-from langchain_openai import ChatOpenAI
+from langchain_openai import AzureChatOpenAI
 from langchain_experimental.agents import create_pandas_dataframe_agent
 
 
@@ -62,8 +62,12 @@ def main():
 
     # ======================================
     # Instanciate llm
-    llm = ChatOpenAI(model="gpt-4o-mini",
-                     temperature=0.0)
+    llm = AzureChatOpenAI(
+        azure_deployment="gpt-4o",
+        # api_version="2024-05-01-preview",
+        model="gpt-4o",
+        temperature=0.0
+    )
     
     def call_agent(llm, df):
         agent = create_pandas_dataframe_agent(llm,
