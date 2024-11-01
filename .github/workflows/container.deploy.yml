@@ -7,6 +7,8 @@ on:
 env:
   AZURE_APP_NAME: proconex-python
   IMAGE_NAME: proconex-python:latest
+  RESOURCE_GROUP: fathym-proconex-production
+  CONTAINERAPPS_ENVIRONMENT: fpp-container-apps
   ACR_REGISTRY: ${{ secrets.ACR_REGISTRY }}
   ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
   ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }}
@@ -43,8 +45,19 @@ jobs:
           context: .
           load: false
 
-      - name: Deploy to Web App for Containers
-        uses: azure/webapps-deploy@v2
+      - name: Deploy to Azure Container App
+        uses: azure/CLI@v1
         with:
-          app-name: ${{ env.AZURE_APP_NAME }}
-          images: ${{ env.ACR_REGISTRY }}/${{ env.IMAGE_NAME }}
+          azcliversion: 2.30.0  # Specify a recent version of the Azure CLI
+          scriptType: bash
+          script: |
+            # Deploy or update the container app
+            az containerapp create \
+              --name ${{ env.AZURE_APP_NAME }} \
+              --resource-group ${{ env.RESOURCE_GROUP }} \
+              --environment ${{ env.CONTAINERAPPS_ENVIRONMENT }} \
+              --image ${{ env.ACR_REGISTRY }}/${{ env.IMAGE_NAME }} \
+              --registry-server ${{ env.ACR_REGISTRY }} \
+              --registry-username ${{ env.ACR_USERNAME }} \
+              --registry-password ${{ env.ACR_PASSWORD }} \
+              --cpu 0.5 --memory 1.0Gi
